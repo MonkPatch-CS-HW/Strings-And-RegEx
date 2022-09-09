@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Microsoft.VisualBasic;
 
 namespace Task3
 {
@@ -12,13 +13,13 @@ namespace Task3
 /*
  * Задание 3.1. Проверить, содержит ли заданная строка только цифры?
  */
-        internal static bool AllDigits(string s) => new Regex("WRITE_ME").IsMatch(s);
+        internal static bool AllDigits(string s) => new Regex("^\\d+$").IsMatch(s);
 
 /*
  * Задание 3.2. Проверить, содержит ли заданная строка подстроку, состоящую
  * из букв abc в указанном порядке, но в произвольном регистре?
  */
-        internal static bool ContainsABC(string s) => new Regex("WRITE_ME", RegexOptions.None).IsMatch(s);
+        internal static bool ContainsABC(string s) => new Regex("[aA][bB][cC]", RegexOptions.None).IsMatch(s);
 
 /*
  * Задание 3.3. Найти первое вхождение подстроки, состоящей только из цифр,
@@ -26,7 +27,8 @@ namespace Task3
  */
         internal static string FindDigitalSubstring(string s)
         {
-            throw new NotImplementedException();
+            var match = Regex.Match(s, "\\d+");
+            return match.ToString();
         }
 
 /*
@@ -35,13 +37,15 @@ namespace Task3
  */
         internal static string HideDigits(string s, string s1)
         {
-            throw new NotImplementedException();
+            return Regex.Replace(s, "\\d+", s1);
         }
 
         public static void Main(string[] args)
         {
-            throw new NotImplementedException(
-                "Вызовите здесь все перечисленные в классе функции, как это сделано в предыдущих заданиях");
+            AllDigits("0123");
+            ContainsABC("AbC");
+            FindDigitalSubstring("asd123dsa");
+            HideDigits("asd123", "dsa");
         }
     }
 }

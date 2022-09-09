@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using Microsoft.VisualBasic;
 
 namespace Task2
 {
@@ -16,7 +17,15 @@ namespace Task2
  */
         internal static string FillWithAsterisks(string s, int n)
         {
-            throw new NotImplementedException();
+            var sb = new StringBuilder(s[0].ToString());
+            var part = new string('*', n);
+            for (var i = 1; i < s.Length; i++)
+            {
+                sb.Append(part);
+                sb.Append(s[i]);
+            }
+
+            return sb.ToString();
         }
 
 /*
@@ -34,7 +43,15 @@ namespace Task2
  */
         internal static string TabulateSquares(int n)
         {
-            throw new NotImplementedException();
+            var lineLen = n.ToString().Length + 1 + (n * n).ToString().Length;
+            var sb = new StringBuilder();
+            for (var i = 1; i <= n; i++)
+            {
+                sb.Append(i.ToString() + (i * i).ToString().PadLeft(lineLen - i.ToString().Length) + "\n");
+            }
+
+            sb.Remove(sb.Length - 1, 1);
+            return sb.ToString();
         }
 
         public static void Main(string[] args)

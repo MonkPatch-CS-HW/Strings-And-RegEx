@@ -1,4 +1,6 @@
-﻿namespace Task1
+﻿using System.Text.RegularExpressions;
+
+namespace Task1
 {
     public class Task1
     {
@@ -9,7 +11,7 @@
  */
         internal static int StringLength(string s)
         {
-            throw new NotImplementedException();
+            return s.Length;
         }
 
 /*
@@ -21,9 +23,9 @@
             return new Tuple<int?, int?>(Code(First(s)), Code(Last(s)));
         }
         
-        private static char? First(string s) => throw new NotImplementedException(); 
-        private static char? Last(string s) => throw new NotImplementedException();
-        private static int? Code(char? c) => throw new NotImplementedException();
+        private static char? First(string s) => s[0];
+        private static char? Last(string s) => s[s.Length - 1];
+        private static int? Code(char? c) => c != null ? (int)c : 0;
        
 
 /*
@@ -32,7 +34,14 @@
  */
         internal static int CountDigits(string s)
         {
-            throw new NotImplementedException();
+            var count = 0;
+            foreach (var c in s)
+            {
+                if ('0' <= c && c <= '9')
+                    count += 1;
+            }
+
+            return count;
         }
 
 /*
@@ -44,7 +53,7 @@
  */
         internal static int CountDigits2(string s)
         {
-            throw new NotImplementedException();
+            return s.Count(char.IsDigit);
         }
         
 /*
@@ -52,22 +61,39 @@
  * где на месте знака операции «±» находится символ «+» или «−» (например, «4+7−2−8»). Вывести значение
  * данного выражения (целое число).
  */
-        internal static int CalcDigits(string expr) {
-            throw new NotImplementedException();
+        internal static int CalcDigits(string expr)
+        {
+            expr = "+" + expr;
+            var sum = 0;
+            var parts = Regex.Matches(expr, "[+-]\\d");
+            foreach (Match match in parts)
+            {
+                string str = match.ToString();
+                var mul = str[0] == '+' ? 1 : -1;
+                sum += (str[1] - '0') * mul;
+            }
+
+            return sum;
         }
 
 /*
  * Задание 1.6. Даны строки S, S1 и S2. Заменить в строке S первое вхождение строки S1 на строку S2.
  */
-        internal static string ReplaceWithString(string s, string s1, string s2) {
-            throw new NotImplementedException();
+        internal static string ReplaceWithString(string s, string s1, string s2)
+        {
+            var index = s.IndexOf(s1);
+            return s.Substring(0, index) + s2 + s.Substring(index + s1.Length);
         }
         
 
         public static void Main(string[] args)
         {
-            throw new NotImplementedException(
-                "Вызовите здесь все перечисленные в классе функции, как это сделано в предыдущих заданиях");
+            StringLength("12345");
+            CalcDigits("5+7-1-2+3");
+            FirstLastCodes("asdf");
+            CountDigits("1o23h4k");
+            CountDigits2("1o23h4k");
+            ReplaceWithString("qwepoiqw", "qw", "xxx");
         }
     }
 }
